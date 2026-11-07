@@ -24,7 +24,18 @@ The platform combines five specialized model components across distinct generati
 
 ---
 
-## 2. Product Features & Honest Scope
+## 2. Live Public Deployments (Zero-Cost Architecture)
+
+| Service | Target | Public URL | Status |
+|---|---|---|:---:|
+| **GitHub Repository** | Source Tree & CI | [github.com/cynxtl/atelierai](https://github.com/cynxtl/atelierai) | Verified Public |
+| **Hugging Face Model Hub** | Checkpoints & Weights | [huggingface.co/cynstl/atelierai-models](https://huggingface.co/cynstl/atelierai-models) | Verified (13 assets) |
+| **Hugging Face Space API** | ZeroGPU Gradio Backend | [huggingface.co/spaces/cynstl/atelierai-api](https://huggingface.co/spaces/cynstl/atelierai-api) | Verified (`zero-a10g`) |
+| **Vercel Frontend** | React 19 Studio App | [Deploy to Vercel (1-Click)](https://vercel.com/new/clone?repository-url=https://github.com/cynxtl/atelierai&root-directory=frontend&env=VITE_API_MODE,VITE_GRADIO_SPACE_URL) | Ready for Import |
+
+---
+
+## 3. Product Features & Honest Scope
 
 - **Honest Domain Scope**: Operates strictly on Fashion-MNIST's 10 apparel categories in $28 \times 28$ grayscale silhouettes. Does not fabricate photorealistic textures, arbitrary colors, or unconstrained garments.
 - **Deterministic Guardrails**: Rejects unsupported items (e.g., watches, hats, jewelry, sunglasses, swimwear) with structured feedback rather than hallucinating an arbitrary category.
@@ -34,7 +45,7 @@ The platform combines five specialized model components across distinct generati
 
 ---
 
-## 3. System Architecture & Lifecycle
+## 4. System Architecture & Lifecycle
 
 ```text
                                +-------------------------------------+
@@ -77,7 +88,7 @@ The platform combines five specialized model components across distinct generati
 
 ---
 
-## 4. Technology Stack
+## 5. Technology Stack
 
 | Layer | Technology | Version | Purpose |
 |---|---|---|---|
@@ -93,7 +104,7 @@ The platform combines five specialized model components across distinct generati
 
 ---
 
-## 5. Prerequisites & Local Installation
+## 6. Prerequisites & Local Installation
 
 ### Hardware & Environment
 - **OS**: Windows 11 / Linux
@@ -105,8 +116,8 @@ The platform combines five specialized model components across distinct generati
 
 ```powershell
 # 1. Clone repository
-git clone https://github.com/your-username/FashionAI.git
-cd FashionAI
+git clone https://github.com/cynxtl/atelierai.git
+cd atelierai
 
 # 2. Install backend dependencies
 python -m pip install -r backend/requirements.txt
@@ -119,7 +130,7 @@ cd ..
 
 ---
 
-## 6. Training Pipelines
+## 7. Training Pipelines
 
 All training scripts are fully reproducible, accept configurable seeds and hyperparameters, and save metrics alongside checkpoints.
 
@@ -149,7 +160,7 @@ python -m ml.training.train_distilbert --epochs 4 --batch-size 16 --lr 3e-5
 
 ---
 
-## 7. Running the Local Application
+## 8. Running the Local Application
 
 ### Step 1: Start FastAPI Local Backend
 ```powershell
@@ -168,7 +179,7 @@ Open `http://localhost:5173` in your browser.
 
 ---
 
-## 8. Empirical Benchmark Evaluation
+## 9. Empirical Benchmark Evaluation
 
 Execute the complete automated benchmark suite:
 ```powershell
@@ -211,7 +222,7 @@ We evaluated natural language understanding across the required 10-prompt benchm
 
 ---
 
-## 9. Automated Testing
+## 10. Automated Testing
 
 Run the test suite:
 ```powershell
@@ -225,7 +236,7 @@ npm run build
 
 ---
 
-## 10. Licensing & Dataset Attribution
+## 11. Licensing & Dataset Attribution
 
 - **Fashion-MNIST**: Copyright (c) 2017 Zalando SE, released under the **MIT License**.
 - **Qwen2.5-0.5B-Instruct**: Developed by Alibaba Cloud, released under **Apache 2.0**.
