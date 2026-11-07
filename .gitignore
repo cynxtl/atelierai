@@ -1,0 +1,91 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Python environments
+.venv/
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyTorch and ML Model Checkpoints (Do not commit binary weights to GitHub)
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+*.pkl
+checkpoints/
+artifacts/
+ml/checkpoints/
+
+# Datasets and cache
+data/FashionMNIST/
+ml/data/FashionMNIST/
+*.tar.gz
+*.gz
+*.zip
+.cache/
+hf_cache/
+
+# Node & Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+.ruff_cache/
+
+# Demo recordings and media artifacts
+demo/*.mp4
+demo/*.webm
+demo/raw/
+*.mp4
+*.webm
+
