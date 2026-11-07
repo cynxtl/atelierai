@@ -1,9 +1,9 @@
 """Conditional Variational Autoencoder (C-VAE) for Fashion-MNIST."""
 
-from typing import Tuple
+
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
+from torch import nn
 
 
 class ConditionalVAE(nn.Module):
@@ -65,7 +65,7 @@ class ConditionalVAE(nn.Module):
             nn.Sigmoid(),  # Output in [0, 1]
         )
 
-    def encode(self, x: torch.Tensor, labels: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+    def encode(self, x: torch.Tensor, labels: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         # Spatial condition concatenation
         label_map = self.encoder_label_embed(labels).view(labels.size(0), 1, self.img_size, self.img_size)
         cond_x = torch.cat([x, label_map], dim=1)
@@ -88,7 +88,7 @@ class ConditionalVAE(nn.Module):
         recon_x = self.decoder_deconv(h)
         return recon_x
 
-    def forward(self, x: torch.Tensor, labels: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    def forward(self, x: torch.Tensor, labels: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         mu, logvar = self.encode(x, labels)
         z = self.reparameterize(mu, logvar)
         recon_x = self.decode(z, labels)
@@ -106,7 +106,7 @@ def vae_loss_function(
     mu: torch.Tensor,
     logvar: torch.Tensor,
     beta: float = 1.0,
-) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
     """
     Computes BCE Reconstruction Loss + beta * KL Divergence.
     """

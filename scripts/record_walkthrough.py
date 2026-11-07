@@ -6,12 +6,13 @@ using Playwright browser automation without any TTS synthetic audio.
 Exported using NVIDIA NVENC high-profile visual encoding.
 """
 
-import os
-import sys
-import time
 import math
-from pathlib import Path
+import os
+import shutil
 import subprocess
+import time
+from pathlib import Path
+
 from playwright.sync_api import sync_playwright
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -280,7 +281,6 @@ def capture_pure_browser_video() -> Path:
         # SCENE 6: Architecture Insights & Outro (2:30 - ~2:48)
         # -------------------------------------------------------------
         print(f"  -> [Scene 6] {SCENE_PLAN['scene6']['name']} (18.0s)...")
-        scene6_start = time.time()
         page.evaluate("window.scrollTo({top: 0, behavior: 'smooth'})")
         page.wait_for_timeout(1000)
 

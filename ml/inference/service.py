@@ -3,20 +3,19 @@ Decoupled from API frameworks so it can be imported and executed by both
 FastAPI (local development) and Gradio SDK (Hugging Face ZeroGPU).
 """
 
-import os
-import sys
 import base64
 import io
 import json
 import logging
+import os
+import pathlib
 import time
 from pathlib import Path
-import pathlib
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Any
+
 import numpy as np
-from PIL import Image
 import torch
-import torchvision.transforms as transforms
+from PIL import Image
 
 # Cross-platform compatibility for Windows checkpoints loaded on Linux (e.g. Hugging Face Spaces)
 if os.name != "nt":
@@ -26,18 +25,16 @@ if os.name != "nt":
         pass
 
 from ml.configs.config import (
-    FASHION_CLASSES,
-    CLASS_TO_IDX,
-    IDX_TO_CLASS,
     CHECKPOINTS_DIR,
+    FASHION_CLASSES,
     REPORTS_DIR,
 )
 from ml.models.cgan import ConditionalGenerator
-from ml.models.vae import ConditionalVAE
 from ml.models.classifier import FashionCNNClassifier
-from ml.models.llm_parser import QwenClothingParser, ParseResult
 from ml.models.clip_evaluator import ClipEvaluator
 from ml.models.distilbert_classifier import DistilBertClothingClassifier
+from ml.models.llm_parser import ParseResult, QwenClothingParser
+from ml.models.vae import ConditionalVAE
 
 logger = logging.getLogger(__name__)
 
@@ -71,9 +68,9 @@ class AtelierInferenceEngine:
     """
     def __init__(
         self,
-        checkpoints_dir: Optional[Path] = None,
-        hf_model_repo: Optional[str] = None,
-        device: Optional[str] = None,
+        checkpoints_dir: Path | None = None,
+        hf_model_repo: str | None = None,
+        device: str | None = None,
     ):
         self.checkpoints_dir = Path(checkpoints_dir or CHECKPOINTS_DIR)
         self.hf_model_repo = hf_model_repo or os.environ.get("HF_MODEL_REPO", "cynstl/atelierai-models")
@@ -86,11 +83,11 @@ class AtelierInferenceEngine:
 
         # Models (lazily loaded)
         self.parser = QwenClothingParser(device=str(self.device))
-        self.cgan_generator: Optional[ConditionalGenerator] = None
-        self.vae_model: Optional[ConditionalVAE] = None
-        self.classifier: Optional[FashionCNNClassifier] = None
-        self.clip_evaluator: Optional[ClipEvaluator] = None
-        self.distilbert: Optional[DistilBertClothingClassifier] = None
+        self.cgan_generator: ConditionalGenerator | None = None
+        self.vae_model: ConditionalVAE | None = None
+        self.classifier: FashionCNNClassifier | None = None
+        self.clip_evaluator: ClipEvaluator | None = None
+        self.distilbert: DistilBertClothingClassifier | None = None
 
     def _get_checkpoint_path(self, filename: str) -> Path:
         """Returns local checkpoint path if exists, otherwise downloads from Hugging Face Hub."""
@@ -205,8 +202,8 @@ class AtelierInferenceEngine:
         model_type: str = "cgan",
         strategy: str = "zero-shot",
         evaluate_clip: bool = True,
-        seed: Optional[int] = None,
-    ) -> Dict[str, Any]:
+        seed: int | None = None,
+    ) -> dict[str, Any]:
         """
         Executes complete text-to-clothing generation pipeline:
         1. NLP Parsing (Qwen2.5-0.5B / validated schema)
@@ -305,7 +302,7 @@ class AtelierInferenceEngine:
             "warning": parse_res.warning,
         }
 
-    def compare_cgan_and_vae(self, prompt: str, seed: Optional[int] = 42) -> Dict[str, Any]:
+    def compare_cgan_and_vae(self, prompt: str, seed: int | None = 42) -> dict[str, Any]:
         """Runs both cGAN and VAE for the exact same prompt to allow side-by-side comparison."""
         parse_res = self.parse_prompt(prompt)
         if not parse_res.is_valid:
@@ -329,7 +326,7 @@ class AtelierInferenceEngine:
             "warning": parse_res.warning,
         }
 
-    def get_benchmark_report(self) -> Dict[str, Any]:
+    def get_benchmark_report(self) -> dict[str, Any]:
         """Loads persisted benchmark metrics or indicates if not yet run."""
         for path in [REPORTS_DIR / "benchmark_results.json", Path("reports/benchmark_results.json"), Path("benchmark_results.json")]:
             if path.exists():
@@ -340,7 +337,7 @@ class AtelierInferenceEngine:
             "message": "Benchmark has not been run yet. Execute scripts/run_benchmarks.py to compute.",
         }
 
-    def get_insights(self) -> Dict[str, Any]:
+    def get_insights(self) -> dict[str, Any]:
         """Returns architecture and syllabus layer metadata."""
         return {
             "classes": FASHION_CLASSES,

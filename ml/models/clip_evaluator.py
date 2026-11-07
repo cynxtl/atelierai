@@ -1,11 +1,11 @@
 """Multimodal image-text alignment evaluation using CLIP ViT-B/32."""
 
 import logging
-from typing import List, Dict, Union, Optional
+
 import numpy as np
-from PIL import Image
 import torch
 import torch.nn.functional as F
+from PIL import Image
 
 from ml.configs.config import FASHION_CLASSES
 
@@ -52,7 +52,7 @@ class ClipEvaluator:
         self._is_loaded = True
         logger.info("CLIP model loaded successfully.")
 
-    def preprocess_tensor_to_rgb_pil(self, tensor: torch.Tensor) -> List[Image.Image]:
+    def preprocess_tensor_to_rgb_pil(self, tensor: torch.Tensor) -> list[Image.Image]:
         """
         Converts 1x28x28 tensor (values in [-1, 1] or [0, 1]) to 3-channel PIL Images.
         """
@@ -82,9 +82,9 @@ class ClipEvaluator:
     @torch.no_grad()
     def compute_similarity(
         self,
-        images: Union[torch.Tensor, List[Image.Image]],
-        text_prompts: Union[str, List[str]],
-    ) -> List[Dict[str, any]]:
+        images: torch.Tensor | list[Image.Image],
+        text_prompts: str | list[str],
+    ) -> list[dict[str, any]]:
         """
         Computes cosine similarity between images and text prompts.
         Returns per-image scores and ranking across text prompts.
@@ -149,7 +149,7 @@ class ClipEvaluator:
         self,
         images: torch.Tensor,
         target_class_idx: int,
-    ) -> Dict[str, any]:
+    ) -> dict[str, any]:
         """
         Evaluates a batch of generated images against all 10 Fashion-MNIST category prompts.
         Calculates target class similarity, rank, and zero-shot accuracy under CLIP.

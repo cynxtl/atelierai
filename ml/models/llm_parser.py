@@ -1,9 +1,9 @@
 """LLM Natural Language Parser using Qwen2.5-0.5B-Instruct with Pydantic validation."""
 
 import json
-import re
 import logging
-from typing import Dict, Any, Optional, Tuple
+import re
+
 from pydantic import BaseModel, Field, ValidationError
 
 logger = logging.getLogger(__name__)
@@ -176,15 +176,15 @@ class GenerationRequestSchema(BaseModel):
 class ParseResult(BaseModel):
     """Overall outcome of text prompt interpretation."""
     is_valid: bool
-    class_label: Optional[str] = None
-    display_label: Optional[str] = None
-    class_idx: Optional[int] = None
+    class_label: str | None = None
+    display_label: str | None = None
+    class_idx: int | None = None
     count: int = 1
-    raw_llm_output: Optional[str] = None
+    raw_llm_output: str | None = None
     strategy: str = "zero-shot"
-    error_message: Optional[str] = None
-    unsupported_requested: Optional[str] = None
-    warning: Optional[str] = None
+    error_message: str | None = None
+    unsupported_requested: str | None = None
+    warning: str | None = None
 
 
 class QwenClothingParser:
@@ -255,7 +255,7 @@ class QwenClothingParser:
 
         return full_prompt
 
-    def check_prompt_safety(self, text: str) -> Optional[str]:
+    def check_prompt_safety(self, text: str) -> str | None:
         """
         Defensive safety check against prompt injection and malformed inputs.
         """
@@ -282,7 +282,7 @@ class QwenClothingParser:
 
         return None
 
-    def rule_based_fallback_parser(self, text: str) -> Tuple[Optional[str], int, Optional[str]]:
+    def rule_based_fallback_parser(self, text: str) -> tuple[str | None, int, str | None]:
         """
         Robust deterministic parsing fallback for synonym mapping, quantities, and unsupported items.
         """

@@ -1,9 +1,9 @@
 """Auxiliary Convolutional Classifier for Fashion-MNIST image evaluation."""
 
-from typing import Tuple
+
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
+from torch import nn
 
 
 class FashionCNNClassifier(nn.Module):
@@ -43,7 +43,7 @@ class FashionCNNClassifier(nn.Module):
         return logits
 
     @torch.no_grad()
-    def predict_classes(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+    def predict_classes(self, x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         """Returns predicted class indices and confidence probabilities."""
         self.eval()
         logits = self.forward(x)

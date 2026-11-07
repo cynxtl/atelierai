@@ -3,10 +3,9 @@ Deploys AtelierAI Gradio API adapter to Hugging Face Spaces (ZeroGPU).
 Target Space: cynstl/atelierai-api (Public, Gradio SDK)
 """
 
-import os
-import sys
 import shutil
 from pathlib import Path
+
 from huggingface_hub import HfApi, create_repo
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -99,7 +98,7 @@ api.upload_folder(
     token=token,
 )
 
-print(f"\n[4/4] Space upload complete! Checking Space runtime status...")
+print("\n[4/4] Space upload complete! Checking Space runtime status...")
 runtime = api.get_space_runtime(repo_id=SPACE_ID, token=token)
 print(f"Space Stage: {runtime.stage}")
 print(f"Space Hardware: {runtime.hardware}")

@@ -1,22 +1,19 @@
 """Fine-tuned DistilBERT classifier for clothing prompt category extraction."""
 
-import json
 import logging
-from pathlib import Path
-from typing import List, Dict, Tuple, Optional
-import torch
-import torch.nn as nn
-from torch.utils.data import Dataset, DataLoader
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-from ml.configs.config import FASHION_CLASSES, CLASS_TO_IDX, IDX_TO_CLASS
+import torch
+from torch.utils.data import Dataset
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+from ml.configs.config import FASHION_CLASSES
 
 logger = logging.getLogger(__name__)
 
 
 class FashionTextDataset(Dataset):
     """PyTorch Dataset for text prompts labeled with Fashion-MNIST classes."""
-    def __init__(self, texts: List[str], labels: List[int], tokenizer, max_length: int = 64):
+    def __init__(self, texts: list[str], labels: list[int], tokenizer, max_length: int = 64):
         self.texts = texts
         self.labels = labels
         self.tokenizer = tokenizer
@@ -67,7 +64,7 @@ class DistilBertClothingClassifier:
         logger.info("DistilBERT loaded successfully.")
 
     @torch.no_grad()
-    def predict(self, text: str) -> Dict[str, any]:
+    def predict(self, text: str) -> dict[str, any]:
         """Classifies a user prompt into one of the 10 Fashion-MNIST categories."""
         if not self._is_loaded:
             self.load()
@@ -94,7 +91,7 @@ class DistilBertClothingClassifier:
         }
 
 
-def generate_synthetic_fashion_text_dataset() -> Dict[str, List[Tuple[str, int]]]:
+def generate_synthetic_fashion_text_dataset() -> dict[str, list[tuple[str, int]]]:
     """
     Generates a diverse synthetic dataset of natural language clothing requests
     across all 10 Fashion-MNIST classes to fine-tune DistilBERT.
@@ -103,7 +100,7 @@ def generate_synthetic_fashion_text_dataset() -> Dict[str, List[Tuple[str, int]]
     """
     import random
 
-    raw_data: Dict[int, List[str]] = {
+    raw_data: dict[int, list[str]] = {
         0: [  # T-shirt/top
             "a basic white t-shirt", "plain cotton tee", "summer tank top for the beach",
             "casual black t shirt", "graphic crop top", "crew neck athletic tee",

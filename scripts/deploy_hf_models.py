@@ -3,9 +3,8 @@ Uploads trained AtelierAI model checkpoints to Hugging Face Model Hub.
 Repo: cynstl/atelierai-models (Public)
 """
 
-import os
-import sys
 from pathlib import Path
+
 from huggingface_hub import HfApi, create_repo
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -51,7 +50,7 @@ This repository hosts the trained PyTorch model checkpoints and evaluation metri
 
 1. **Conditional GAN Generator (`cgan_generator.pt`)**:
    - Architecture: Deep Convolutional GAN with **Projection Discriminator** (Miyato & Sugiyama, 2018)
-   - Conditioning: 10 Fashion-MNIST apparel classes from latent noise $z \sim \mathcal{N}(0, I)$ (100-dim)
+   - Conditioning: 10 Fashion-MNIST apparel classes from latent noise $z \\sim \\mathcal{N}(0, I)$ (100-dim)
    - Resolution: $1 \times 28 \times 28$ grayscale
    - Empirical Fidelity: **97.20% Oracle Match Rate** (Tested on 1,000 samples)
    - Training: 25 epochs on NVIDIA GeForce RTX 3060 CUDA
@@ -107,7 +106,7 @@ for local_name, remote_name in files_to_upload:
 # Upload distilbert_fashion directory
 distilbert_dir = CKPT_DIR / "distilbert_fashion"
 if distilbert_dir.exists():
-    print(f"  Uploading distilbert_fashion folder...")
+    print("  Uploading distilbert_fashion folder...")
     api.upload_folder(
         folder_path=str(distilbert_dir),
         path_in_repo="distilbert_fashion",

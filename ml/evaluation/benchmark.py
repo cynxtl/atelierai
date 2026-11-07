@@ -1,27 +1,20 @@
 """Comprehensive benchmark and evaluation suite for AtelierAI."""
 
-import argparse
-import json
 import logging
-import time
-from pathlib import Path
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Any
+
 import numpy as np
 import torch
 
 from ml.configs.config import (
     FASHION_CLASSES,
-    CLASS_TO_IDX,
-    IDX_TO_CLASS,
-    CHECKPOINTS_DIR,
-    REPORTS_DIR,
 )
-from ml.models.classifier import FashionCNNClassifier
 from ml.models.cgan import ConditionalGenerator
-from ml.models.vae import ConditionalVAE
-from ml.models.llm_parser import QwenClothingParser
-from ml.models.distilbert_classifier import DistilBertClothingClassifier
+from ml.models.classifier import FashionCNNClassifier
 from ml.models.clip_evaluator import ClipEvaluator
+from ml.models.distilbert_classifier import DistilBertClothingClassifier
+from ml.models.llm_parser import QwenClothingParser
+from ml.models.vae import ConditionalVAE
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
@@ -196,8 +189,8 @@ ROBUSTNESS_BENCHMARK = [
 
 def evaluate_natural_language_models(
     parser: QwenClothingParser,
-    distilbert: Optional[DistilBertClothingClassifier] = None,
-) -> Dict[str, Any]:
+    distilbert: DistilBertClothingClassifier | None = None,
+) -> dict[str, Any]:
     """
     Evaluates Qwen zero-shot, Qwen few-shot, rule fallback, and DistilBERT on the 10 fixed requests.
     Disables deterministic fallback during standalone LLM evaluation to provide unvarnished metrics.
@@ -359,7 +352,7 @@ def evaluate_natural_language_models(
     return summary
 
 
-def evaluate_robustness_benchmark(parser: QwenClothingParser) -> Dict[str, Any]:
+def evaluate_robustness_benchmark(parser: QwenClothingParser) -> dict[str, Any]:
     """
     Evaluates 20 diverse, challenging requests testing synonyms, ambiguity,
     unsupported categories, paraphrases, and quantity variations.
@@ -440,7 +433,7 @@ def evaluate_robustness_benchmark(parser: QwenClothingParser) -> Dict[str, Any]:
     }
 
 
-def evaluate_responsible_ai(parser: QwenClothingParser) -> Dict[str, Any]:
+def evaluate_responsible_ai(parser: QwenClothingParser) -> dict[str, Any]:
     """Evaluates parser safety against prompt injection, unsupported categories, and invalid quantities."""
     logger.info("Evaluating Layer V Responsible AI benchmark...")
 
@@ -533,7 +526,7 @@ def evaluate_image_generation(
     clip_evaluator: ClipEvaluator,
     samples_per_class: int = 100,
     device: torch.device = torch.device("cpu"),
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Performs rigorous class-wise evaluation across all 10 Fashion-MNIST classes:
     - Classifier category match rate (%)

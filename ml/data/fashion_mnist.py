@@ -2,7 +2,7 @@
 
 import os
 from pathlib import Path
-from typing import Tuple, Optional
+
 import torch
 from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
@@ -10,7 +10,7 @@ from torchvision import datasets, transforms
 from ml.configs.config import DATA_DIR
 
 
-def get_transforms(for_model: str = "cgan") -> Tuple[transforms.Compose, transforms.Compose]:
+def get_transforms(for_model: str = "cgan") -> tuple[transforms.Compose, transforms.Compose]:
     """
     Get train and test torchvision transforms tailored for specific model types.
     - cgan: normalizes to [-1, 1] matching Tanh generator activation.
@@ -58,8 +58,8 @@ def get_fashion_mnist_dataloaders(
     num_workers: int = 0,
     seed: int = 42,
     val_split: float = 0.1,
-    data_dir: Optional[Path] = None,
-) -> Tuple[DataLoader, Optional[DataLoader], DataLoader]:
+    data_dir: Path | None = None,
+) -> tuple[DataLoader, DataLoader | None, DataLoader]:
     """
     Download (if needed) and prepare Fashion-MNIST train, val, and test dataloaders.
     """

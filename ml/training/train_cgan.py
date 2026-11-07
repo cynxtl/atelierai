@@ -5,14 +5,18 @@ import json
 import logging
 import time
 from pathlib import Path
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torchvision.utils import save_image, make_grid
 
-from ml.configs.config import CGANConfig, FASHION_CLASSES, REPORTS_DIR
+import torch
+from torch import nn, optim
+from torchvision.utils import make_grid, save_image
+
+from ml.configs.config import REPORTS_DIR, CGANConfig
 from ml.data.fashion_mnist import get_fashion_mnist_dataloaders
-from ml.models.cgan import ConditionalGenerator, ConditionalDiscriminator, weights_init_normal
+from ml.models.cgan import (
+    ConditionalDiscriminator,
+    ConditionalGenerator,
+    weights_init_normal,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)

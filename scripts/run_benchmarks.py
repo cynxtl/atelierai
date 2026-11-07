@@ -4,26 +4,25 @@ import argparse
 import json
 import logging
 import time
-from pathlib import Path
+
 import torch
 
 from ml.configs.config import (
     CHECKPOINTS_DIR,
     REPORTS_DIR,
-    FASHION_CLASSES,
+)
+from ml.evaluation.benchmark import (
+    evaluate_image_generation,
+    evaluate_natural_language_models,
+    evaluate_responsible_ai,
+    evaluate_robustness_benchmark,
 )
 from ml.models.cgan import ConditionalGenerator
-from ml.models.vae import ConditionalVAE
 from ml.models.classifier import FashionCNNClassifier
 from ml.models.clip_evaluator import ClipEvaluator
-from ml.models.llm_parser import QwenClothingParser
 from ml.models.distilbert_classifier import DistilBertClothingClassifier
-from ml.evaluation.benchmark import (
-    evaluate_natural_language_models,
-    evaluate_robustness_benchmark,
-    evaluate_image_generation,
-    evaluate_responsible_ai,
-)
+from ml.models.llm_parser import QwenClothingParser
+from ml.models.vae import ConditionalVAE
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
@@ -142,7 +141,7 @@ def main():
         print(f"  - Fine-Tuned DistilBERT:                  {nlp_results['distilbert_category_accuracy']}%")
     print(f"\n20-Request Robustness Benchmark Pass Rate: {robustness_results['pass_rate_percentage']}%")
     print(f"Layer V Responsible AI Pass Rate:          {responsible_ai_results['pass_rate_percentage']}%")
-    print(f"\nImage Generation Category Match Rate:")
+    print("\nImage Generation Category Match Rate:")
     print(f"  - cGAN Overall:   {image_results['cgan']['overall_class_match_rate']}%")
     print(f"  - VAE Overall:    {image_results['vae']['overall_class_match_rate']}%")
     print(f"  - cGAN Avg CLIP:  {image_results['cgan']['average_clip_similarity']} (cosine)")

@@ -1,11 +1,10 @@
 """Configuration constants and hyperparameters for AtelierAI ML pipelines."""
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
-from typing import List
 
 # Official 10 Fashion-MNIST Classes (Index 0 to 9)
-FASHION_CLASSES: List[str] = [
+FASHION_CLASSES: list[str] = [
     "T-shirt/top",
     "Trouser",
     "Pullover",

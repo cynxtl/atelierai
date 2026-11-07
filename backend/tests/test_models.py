@@ -1,10 +1,10 @@
 """Unit tests for ML model architectures and tensor output dimensions."""
 
-import pytest
 import torch
-from ml.models.cgan import ConditionalGenerator, ConditionalDiscriminator
-from ml.models.vae import ConditionalVAE, vae_loss_function
+
+from ml.models.cgan import ConditionalDiscriminator, ConditionalGenerator
 from ml.models.classifier import FashionCNNClassifier
+from ml.models.vae import ConditionalVAE, vae_loss_function
 
 
 def test_cgan_generator_shape():

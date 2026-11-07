@@ -1,6 +1,7 @@
 """Unit tests for Qwen / rule-based clothing prompt parser."""
 
 import pytest
+
 from ml.models.llm_parser import QwenClothingParser
 
 

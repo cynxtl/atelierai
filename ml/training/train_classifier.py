@@ -4,12 +4,11 @@ import argparse
 import json
 import logging
 import time
-from pathlib import Path
-import torch
-import torch.nn as nn
-import torch.optim as optim
 
-from ml.configs.config import ClassifierConfig, FASHION_CLASSES
+import torch
+from torch import nn, optim
+
+from ml.configs.config import FASHION_CLASSES, ClassifierConfig
 from ml.data.fashion_mnist import get_fashion_mnist_dataloaders
 from ml.models.classifier import FashionCNNClassifier
 

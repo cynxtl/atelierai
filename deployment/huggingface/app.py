@@ -3,9 +3,9 @@ Reuses the shared AtelierInferenceEngine without code duplication.
 """
 
 import os
+import pathlib
 import sys
 from pathlib import Path
-import pathlib
 
 # Cross-platform compatibility for Windows checkpoints loaded on Linux (e.g. Hugging Face Spaces)
 if os.name != "nt":
@@ -15,6 +15,7 @@ if os.name != "nt":
         pass
 
 import gradio as gr
+import torch
 
 # Add project root to sys.path so ml.* imports work seamlessly on Hugging Face Spaces
 CURRENT_DIR = Path(__file__).resolve().parent
@@ -26,7 +27,6 @@ else:
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from ml.configs.config import FASHION_CLASSES
 from ml.inference.service import AtelierInferenceEngine
 
 # Conditional Spaces ZeroGPU decorator import

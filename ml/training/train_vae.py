@@ -5,11 +5,12 @@ import json
 import logging
 import time
 from pathlib import Path
-import torch
-import torch.optim as optim
-from torchvision.utils import save_image, make_grid
 
-from ml.configs.config import VAEConfig, FASHION_CLASSES, REPORTS_DIR
+import torch
+from torch import optim
+from torchvision.utils import make_grid, save_image
+
+from ml.configs.config import REPORTS_DIR, VAEConfig
 from ml.data.fashion_mnist import get_fashion_mnist_dataloaders
 from ml.models.vae import ConditionalVAE, vae_loss_function
 
@@ -22,8 +23,6 @@ def generate_vae_sample_grid(model: ConditionalVAE, device: torch.device, output
     model.eval()
     num_classes = 10
     samples_per_class = 8
-    total_samples = num_classes * samples_per_class
-
     labels = torch.arange(num_classes, device=device).repeat_interleave(samples_per_class)
     torch.manual_seed(42)
 

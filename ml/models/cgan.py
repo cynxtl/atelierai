@@ -1,7 +1,7 @@
 """Conditional Generative Adversarial Network (cGAN) for Fashion-MNIST."""
 
 import torch
-import torch.nn as nn
+from torch import nn
 
 
 def weights_init_normal(m):

@@ -2,19 +2,19 @@
 
 import json
 import logging
-from typing import Dict, Any
-from fastapi import APIRouter, HTTPException, Depends
-import torch
 
-from ml.configs.config import CHECKPOINTS_DIR, FASHION_CLASSES
-from ml.inference.service import AtelierInferenceEngine
+import torch
+from fastapi import APIRouter, Depends, HTTPException
+
 from backend.app.schemas.generation import (
-    GenerateRequest,
-    GenerateResponse,
     CompareRequest,
     CompareResponse,
+    GenerateRequest,
+    GenerateResponse,
     HealthResponse,
 )
+from ml.configs.config import CHECKPOINTS_DIR, FASHION_CLASSES
+from ml.inference.service import AtelierInferenceEngine
 
 logger = logging.getLogger(__name__)
 

@@ -4,14 +4,21 @@ import argparse
 import json
 import logging
 import time
-from pathlib import Path
-import torch
-import torch.nn as nn
-from torch.utils.data import DataLoader
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, get_linear_schedule_with_warmup
 
-from ml.configs.config import DistilBERTConfig, FASHION_CLASSES
-from ml.models.distilbert_classifier import FashionTextDataset, generate_synthetic_fashion_text_dataset
+import torch
+from torch import nn
+from torch.utils.data import DataLoader
+from transformers import (
+    AutoModelForSequenceClassification,
+    AutoTokenizer,
+    get_linear_schedule_with_warmup,
+)
+
+from ml.configs.config import FASHION_CLASSES, DistilBERTConfig
+from ml.models.distilbert_classifier import (
+    FashionTextDataset,
+    generate_synthetic_fashion_text_dataset,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
